@@ -55,6 +55,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .map(newUser -> {
                     newUser.setPassword(user.getPassword());
+                    newUser.setEmail(user.getEmail());
+                    newUser.setFullName(user.getFullName());
                     return userRepository.save(newUser);
                 }).orElseThrow(() -> new ResourceNotFoundException("Couldn't find user with id ", id));
     }
