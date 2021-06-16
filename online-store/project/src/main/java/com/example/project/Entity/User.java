@@ -34,6 +34,12 @@ public class User extends BaseEntity implements UserDetails {
     )
     Set<Role> roles = new HashSet<>();
 
+    @Column(name = "email", nullable = false)
+    String email;
+
+    @Column(name = "full_name", nullable = false)
+    String fullName;
+
 //    @OneToOne
 //    @JoinColumn(name = "contact_id", referencedColumnName = "id")
 //    Contact contact;
