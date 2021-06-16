@@ -39,9 +39,9 @@ public class Boot implements CommandLineRunner {
         Role roleAdmin = roleService.createRole(Role.builder().name("ROLE_ADMIN").build());
         roleService.createRole(Role.builder().name("ROLE_USER").build());
 
-        User user1 = userService.createUser(User.builder().login("user").
+        User user1 = userService.createUser(User.builder().email("user@gmail.com").fullName("User").login("user").
                 password("user123").status(1).build());
-        User user2 = userService.createAdmin(User.builder().login("admin").
+        User user2 = userService.createAdmin(User.builder().login("admin").fullName("Admin").email("admin@gmail.com").
                 password(passwordEncoder.encode("admin123")).roles(Collections.singleton(roleAdmin)).status(1).build());
 
         contactService.createContactCLR(Contact.builder().user(user2).email("admin@gmail.com").phoneNumber("77777777").postCode("1111").build());

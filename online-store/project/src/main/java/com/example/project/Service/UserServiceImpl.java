@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) throws ResourceNotFoundException {
+        user.setStatus(1);
         Role role = roleService.getRole(2L);
         user.setRoles(Collections.singleton(role));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -42,6 +43,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User createAdmin(User user) {
+        user.setStatus(1);
         return userRepository.save(user);
     }
 
