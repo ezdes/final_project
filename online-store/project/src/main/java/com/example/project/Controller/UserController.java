@@ -1,8 +1,8 @@
 package com.example.project.Controller;
 
 import com.example.project.Entity.User;
+import com.example.project.Exception.JwtUserException;
 import com.example.project.Exception.ResourceNotFoundException;
-import com.example.project.Model.AuthResponse;
 import com.example.project.Model.UserModel;
 import com.example.project.Repository.UserRepository;
 import com.example.project.Service.UserService;
@@ -49,24 +49,28 @@ public class UserController {
 
     @PostMapping ("/sign-in")
     @ResponseBody
-    public AuthResponse generateToken(@RequestBody UserModel userModel) throws Exception {
+    public User generateToken(@RequestBody UserModel userModel) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userModel.getLogin(), userModel.getPassword())
             );
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());;
+            throw new Exception();
         }
         User user = userRepository.findByLogin(userModel.getLogin());
-        AuthResponse authResponse = new AuthResponse();
-        authResponse.setLogin(user.getLogin());
-        authResponse.setPassword(user.getPassword());
-        authResponse.setFullName(user.getFullName());
-        authResponse.setStatus(user.getStatus());
-        authResponse.setEmail(user.getEmail());
-        authResponse.setToken(jwtUtil.generateToken(userModel.getLogin()));
-        return authResponse;
+        user.setToken(jwtUtil.generateToken(userModel.getLogin()));
+        userService.updateUserById(user.getId(), user);
+        return user;
+    }
+
+    @GetMapping("/jwtGetUser")
+    public User getUserByJwt(@RequestHeader("jwt") String jwt) throws JwtUserException {
+        User user = userRepository.findByToken(jwt);
+
+        if (user == null) throw new JwtUserException();
+
+        return user;
     }
 
     @DeleteMapping("/{id}")

@@ -40,10 +40,8 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "full_name", nullable = false)
     String fullName;
 
-//    @OneToOne
-//    @JoinColumn(name = "contact_id", referencedColumnName = "id")
-//    Contact contact;
-
+    @Column(name = "token")
+    String token;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

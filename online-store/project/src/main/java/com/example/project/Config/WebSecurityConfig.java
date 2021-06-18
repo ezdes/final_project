@@ -1,3 +1,4 @@
+
 package com.example.project.Config;
 
 import com.example.project.Entity.Card;
@@ -49,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                 .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users/**").permitAll()
                 .antMatchers("/sign-in/**").permitAll()
@@ -70,10 +71,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/roles/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/stores/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/stores/**").hasRole("ADMIN")
-           
+
                 .antMatchers(HttpMethod.PUT, "/stores/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/stores/**").permitAll()
-            
+
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -81,7 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html/**", "/webjars/**");
 
     }
 
