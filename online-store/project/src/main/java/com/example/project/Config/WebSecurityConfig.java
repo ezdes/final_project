@@ -23,7 +23,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.sql.DataSource;
 import java.util.Arrays;
 
 @EnableWebSecurity
@@ -71,6 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/roles/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/stores/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/stores/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/jwtGetUser").permitAll()
 
                 .antMatchers(HttpMethod.PUT, "/stores/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/stores/**").permitAll()
