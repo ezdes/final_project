@@ -2,7 +2,9 @@ package com.example.project.Controller;
 
 import com.example.project.Entity.User;
 import com.example.project.Exception.ResourceNotFoundException;
+import com.example.project.Model.AuthResponse;
 import com.example.project.Model.UserModel;
+import com.example.project.Repository.UserRepository;
 import com.example.project.Service.UserService;
 import com.example.project.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserController {
     private JwtUtil jwtUtil;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping("/sign-up")
     public User createUser(@RequestBody User user) throws ResourceNotFoundException {
@@ -45,15 +49,24 @@ public class UserController {
 
     @PostMapping ("/sign-in")
     @ResponseBody
-    public String generateToken(@RequestBody UserModel userModel) throws Exception {
+    public AuthResponse generateToken(@RequestBody UserModel userModel) throws Exception {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(userModel.getLogin(), userModel.getPassword())
             );
+
         } catch (Exception ex) {
-            return "Invalid login/password";
+            System.out.println(ex.getMessage());;
         }
-        return jwtUtil.generateToken(userModel.getLogin());
+        User user = userRepository.findByLogin(userModel.getLogin());
+        AuthResponse authResponse = new AuthResponse();
+        authResponse.setLogin(user.getLogin());
+        authResponse.setPassword(user.getPassword());
+        authResponse.setFullName(user.getFullName());
+        authResponse.setStatus(user.getStatus());
+        authResponse.setEmail(user.getEmail());
+        authResponse.setToken(jwtUtil.generateToken(userModel.getLogin()));
+        return authResponse;
     }
 
     @DeleteMapping("/{id}")
