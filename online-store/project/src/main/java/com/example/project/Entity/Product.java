@@ -33,12 +33,7 @@ public class Product extends BaseEntity {
     @Column(name = "weight", nullable = false)
     Double weight;
 
-    @JsonProperty
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "product_categories",
-            joinColumns = {@JoinColumn(name = "product_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "category_ID")}
-    )
-    Set<Category> categories = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 }

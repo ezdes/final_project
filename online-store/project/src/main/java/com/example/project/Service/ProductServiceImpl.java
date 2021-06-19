@@ -44,7 +44,7 @@ public class ProductServiceImpl implements ProductService {
                     newProduct.setDescription(product.getName());
                     newProduct.setPrice(product.getPrice());
                     newProduct.setWeight(product.getWeight());
-                    newProduct.setCategories(product.getCategories());
+                    newProduct.setCategory(product.getCategory());
                     return productRepository.save(newProduct);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find product with id ", id));
     }

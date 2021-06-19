@@ -50,14 +50,9 @@ public class Boot implements CommandLineRunner {
         Category category1 = categoryService.createCategory(Category.builder().name("Electronic").description("lllllllllllll").build());
         Category category2 = categoryService.createCategory(Category.builder().name("Clothes").description("lllllllllllll").build());
 
-        Set<Category> categorySet1 = new HashSet<>();
-        categorySet1.add(category1);
 
-        Set<Category> categorySet2 = new HashSet<>();
-        categorySet2.add(category2);
-
-        productService.createProduct(Product.builder().name("Laptop").description("qqqqqqqq").categories(categorySet1).price(45.0).weight(2.0).build());
-        productService.createProduct(Product.builder().name("Pullover").description("qqqqqqqq").categories(categorySet2).price(25.0).weight(1.0).build());
+        productService.createProduct(Product.builder().name("Laptop").description("qqqqqqqq").category(category1).price(45.0).weight(2.0).build());
+        productService.createProduct(Product.builder().name("Pullover").description("qqqqqqqq").category(category2).price(25.0).weight(1.0).build());
 
         cardService.createCard(Card.builder().number(12122121).ccv(121).balance(3000.0).build());
 
