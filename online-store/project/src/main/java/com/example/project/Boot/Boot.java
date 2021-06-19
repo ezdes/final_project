@@ -31,12 +31,13 @@ public class Boot implements CommandLineRunner {
         String nameUser = "ROLE_USER";
         String nameAdmin = "ROLE_ADMIN";
 
-        if (roleRepository.findByName(nameUser) == null) {
-            roleService.createRole(Role.builder().name("ROLE_USER").build());
-        }
 
         if (roleRepository.findByName(nameAdmin) == null) {
             roleService.createRole(Role.builder().name("ROLE_ADMIN").build());
+        }
+
+        if (roleRepository.findByName(nameUser) == null) {
+            roleService.createRole(Role.builder().name("ROLE_USER").build());
         }
 
 //        Role roleAdmin = roleService.createRole(Role.builder().name("ROLE_ADMIN").build());
