@@ -1,6 +1,6 @@
 package com.example.project.Enum;
 
-public enum Type {
+public enum DeliveryType {
     DELIVERY,
     CASH
 }

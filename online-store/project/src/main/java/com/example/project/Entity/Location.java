@@ -25,6 +25,4 @@ public class Location extends BaseEntity{
     @Column(name = "region", nullable = false)
     RegionCost region;
 
-    @Column(name = "country", nullable = false)
-    String country;
 }

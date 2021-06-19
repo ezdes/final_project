@@ -3,6 +3,7 @@ package com.example.project.Controller;
 import com.example.project.Entity.User;
 import com.example.project.Exception.JwtUserException;
 import com.example.project.Exception.ResourceNotFoundException;
+import com.example.project.Exception.UserAuthException;
 import com.example.project.Model.UserModel;
 import com.example.project.Repository.UserRepository;
 import com.example.project.Service.UserService;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -56,7 +56,7 @@ public class UserController {
             );
 
         } catch (Exception ex) {
-            throw new Exception();
+            throw new UserAuthException("Invalid login or password");
         }
         User user = userRepository.findByLogin(userModel.getLogin());
         user.setToken(jwtUtil.generateToken(userModel.getLogin()));
@@ -68,7 +68,7 @@ public class UserController {
     public User getUserByJwt(@RequestHeader("jwt") String jwt) throws JwtUserException {
         User user = userRepository.findByToken(jwt);
 
-        if (user == null) throw new JwtUserException();
+        if (user == null) throw new JwtUserException("Couldn't find user with token: " + jwt);
 
         return user;
     }

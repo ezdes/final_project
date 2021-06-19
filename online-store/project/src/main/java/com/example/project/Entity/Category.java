@@ -19,4 +19,8 @@ public class Category extends BaseEntity {
 
     @Column(name = "description", nullable = false)
     String description;
+
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    Image image;
 }

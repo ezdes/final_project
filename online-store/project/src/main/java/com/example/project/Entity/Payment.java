@@ -1,7 +1,7 @@
 package com.example.project.Entity;
 
-import com.example.project.Enum.Status;
-import com.example.project.Enum.Type;
+import com.example.project.Enum.PaymentStatus;
+import com.example.project.Enum.DeliveryType;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -18,11 +18,11 @@ public class Payment extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    Status status;
+    PaymentStatus paymentStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    Type type;
+    DeliveryType deliveryType;
 
     @Column(name = "total_price")
     Double total;

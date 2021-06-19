@@ -1,8 +1,8 @@
 package com.example.project.Service;
 
 import com.example.project.Entity.*;
-import com.example.project.Enum.Status;
-import com.example.project.Enum.Type;
+import com.example.project.Enum.PaymentStatus;
+import com.example.project.Enum.DeliveryType;
 import com.example.project.Exception.ResourceNotFoundException;
 import com.example.project.Repository.OrderRepository;
 import com.example.project.Repository.PaymentRepository;
@@ -66,24 +66,24 @@ public class PaymentServiceImpl implements PaymentService {
         payment.setTotal(order.getTotal() + location.getRegion().getPrice());
 
 
-        if (payment.getType().equals(Type.DELIVERY)) {
+        if (payment.getDeliveryType().equals(DeliveryType.DELIVERY)) {
             payment.setCard(null);
-            payment.setStatus(Status.OK);
+            payment.setPaymentStatus(PaymentStatus.OK);
         }
-        else if (payment.getType().equals(Type.CASH)) {
+        else if (payment.getDeliveryType().equals(DeliveryType.CASH)) {
             if (payment.getCard() == null) throw new ResourceNotFoundException();
 
             Card card = cardService.getCard(payment.getCard().getId());
 
 
             if (card.getBalance() < payment.getTotal()) {
-                payment.setStatus(Status.FAILED);
+                payment.setPaymentStatus(PaymentStatus.FAILED);
             }
 
             else {
                 card.setBalance(card.getBalance() - payment.getTotal());
                 cardService.updateCardById(card.getId(), card);
-                payment.setStatus(Status.OK);
+                payment.setPaymentStatus(PaymentStatus.OK);
             }
         }
 
@@ -102,8 +102,8 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment updatePaymentById(Long id, Payment payment) throws ResourceNotFoundException {
         return paymentRepository.findById(id)
                 .map(newPayment -> {
-                    newPayment.setStatus(payment.getStatus());
-                    newPayment.setType(payment.getType());
+                    newPayment.setPaymentStatus(payment.getPaymentStatus());
+                    newPayment.setDeliveryType(payment.getDeliveryType());
                     newPayment.setCard(payment.getCard());
                     newPayment.setDelivery(payment.getDelivery());
                     newPayment.setOrder(payment.getOrder());

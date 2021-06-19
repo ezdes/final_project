@@ -40,7 +40,6 @@ public class LocationServiceImpl implements LocationService {
                 .map(newLocation -> {
                     newLocation.setPostalCode(location.getPostalCode());
                     newLocation.setCity(location.getCity());
-                    newLocation.setCountry(location.getCountry());
                     newLocation.setRegion(location.getRegion());
                     return locationRepository.save(newLocation);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find location with id ", id));

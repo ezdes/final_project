@@ -1,6 +1,6 @@
 package com.example.project.Enum;
 
-public enum Status {
+public enum PaymentStatus {
     OK,
     FAILED
 }

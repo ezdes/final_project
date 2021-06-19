@@ -33,6 +33,10 @@ public class Product extends BaseEntity {
     @Column(name = "weight", nullable = false)
     Double weight;
 
+    @OneToOne
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    Image image;
+
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
