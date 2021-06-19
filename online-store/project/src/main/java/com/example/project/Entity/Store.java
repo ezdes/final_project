@@ -17,10 +17,15 @@ public class Store extends BaseEntity {
     @Column(name = "name", nullable = false)
     String name;
 
+    @Column(name = "email", nullable = false)
+    String email;
+
+    @Column(name = "phone_number", nullable = false)
+    String phoneNumber;
+
     @Column(name = "description", nullable = false)
     String description;
 
-    @ManyToOne
-    @JoinColumn(name = "location_id", referencedColumnName = "id")
-    Location location;
+    @Column(name = "address", nullable = false)
+    String address;
 }

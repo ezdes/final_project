@@ -1,7 +1,6 @@
 
 package com.example.project.Config;
 
-import com.example.project.Entity.Card;
 import com.example.project.Filter.JwtFilter;
 import com.example.project.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

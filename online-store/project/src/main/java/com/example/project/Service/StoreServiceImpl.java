@@ -40,9 +40,10 @@ public class StoreServiceImpl implements StoreService {
         return storeRepository.findById(id)
                 .map(newStore -> {
                     newStore.setName(store.getName());
-               
                     newStore.setDescription(store.getDescription());
-                    newStore.setLocation(store.getLocation());
+                    newStore.setEmail(store.getEmail());
+                    newStore.setPhoneNumber(store.getPhoneNumber());
+                    newStore.setAddress(store.getAddress());
                     return storeRepository.save(newStore);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find store with id ", id));
     }

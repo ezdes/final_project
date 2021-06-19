@@ -3,7 +3,6 @@ package com.example.project.Service;
 import com.example.project.Entity.Delivery;
 import com.example.project.Entity.Location;
 import com.example.project.Entity.User;
-import com.example.project.Enum.RegionCost;
 import com.example.project.Exception.ResourceNotFoundException;
 import com.example.project.Repository.DeliveryRepository;
 import com.example.project.Repository.UserRepository;

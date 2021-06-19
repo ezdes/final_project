@@ -34,11 +34,6 @@ public class OrderController {
         orderService.deleteOrderById(id);
     }
 
-//    @PostMapping
-//    public Order createOrder(@RequestBody Order order) {
-//        return orderService.createOrder(order);
-//    }
-
     @PostMapping
     public Order createOrder() {
         return orderService.createOrder();
