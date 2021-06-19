@@ -42,8 +42,10 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
     @Override
-    public User createAdmin(User user) {
+    public User createAdmin(User user) throws ResourceNotFoundException {
         user.setStatus(1);
+        Role role = roleService.getRole(1L);
+        user.setRoles(Collections.singleton(role));
         return userRepository.save(user);
     }
 

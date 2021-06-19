@@ -10,7 +10,7 @@ public interface UserService extends UserDetailsService {
     List<User> getAllUsers();
     User getUser(Long id) throws ResourceNotFoundException;
     User createUser(User user) throws ResourceNotFoundException;
-    User createAdmin(User user);
+    User createAdmin(User user) throws ResourceNotFoundException;
     void deleteUserById(Long id);
     User updateUserById(Long id, User user) throws ResourceNotFoundException;
 }
