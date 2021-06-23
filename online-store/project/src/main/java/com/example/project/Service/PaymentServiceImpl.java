@@ -29,8 +29,6 @@ public class PaymentServiceImpl implements PaymentService {
     private LocationService locationService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private OrderRepository orderRepository;
 
     @Override
     public List<Payment> getAllPayments() {

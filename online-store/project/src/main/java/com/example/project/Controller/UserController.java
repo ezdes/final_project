@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.BASE64Encoder;
+
 import java.util.List;
 
 @RestController
@@ -67,6 +69,7 @@ public class UserController {
     @GetMapping("/jwtGetUser")
     public User getUserByJwt(@RequestHeader("jwt") String jwt) throws JwtUserException {
         User user = userRepository.findByToken(jwt);
+
 
         if (user == null) throw new JwtUserException("Couldn't find user with token: " + jwt);
 

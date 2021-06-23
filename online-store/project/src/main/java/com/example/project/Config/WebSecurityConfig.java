@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/roles/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/stores/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/stores/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/images/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/jwtGetUser").permitAll()
 
                 .antMatchers(HttpMethod.PUT, "/stores/**").hasRole("ADMIN")
