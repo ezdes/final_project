@@ -2,6 +2,7 @@ package com.example.project.Controller;
 
 import com.example.project.Entity.Product;
 import com.example.project.Exception.ResourceNotFoundException;
+import com.example.project.Repository.ProductRepository;
 import com.example.project.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.List;
 public class ProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     public List<Product> getAllProducts() {
@@ -22,6 +25,11 @@ public class ProductController {
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable Long id) throws ResourceNotFoundException {
         return productService.getProduct(id);
+    }
+
+    @GetMapping("search/{searchName}")
+    public List<Product> searchAllProducts(@PathVariable String searchName) {
+        return productRepository.findByNameIsContainingIgnoreCase(searchName);
     }
 
     @PutMapping("/{id}")
