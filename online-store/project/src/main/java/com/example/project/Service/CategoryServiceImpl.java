@@ -41,6 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .map(newCategory -> {
                     newCategory.setName(category.getName());
                     newCategory.setDescription(category.getDescription());
+                    newCategory.setImage(category.getImage());
                     return categoryRepository.save(newCategory);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find category with id ", id));
     }

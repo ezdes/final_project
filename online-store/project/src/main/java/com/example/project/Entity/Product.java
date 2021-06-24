@@ -38,6 +38,6 @@ public class Product extends BaseEntity {
     Image image;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     Category category;
 }
