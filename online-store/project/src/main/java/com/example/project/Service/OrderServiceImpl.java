@@ -40,8 +40,8 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public Order createOrder() {
         Order order = new Order();
-        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        order.setUser(user);
+//        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+//        order.setUser(user);
         order.setTotal(0.0);
         order.setQuantity(0);
         return orderRepository.save(order);

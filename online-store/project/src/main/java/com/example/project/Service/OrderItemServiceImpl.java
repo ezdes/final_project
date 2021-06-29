@@ -33,15 +33,22 @@ public class OrderItemServiceImpl implements OrderItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("Could not find order item with id ", id));
     }
 
+
     @Override
     public OrderItem createOrderItem(OrderItem orderItem) throws ResourceNotFoundException {
+        Order order =  orderService.createOrder();
         orderItem.setPrice(productService.getProduct(orderItem.getProduct().getId()).getPrice());
-        Order order = orderService.getOrder(orderItem.getOrder().getId());
-        User user = userRepository.findById(order.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("Could not find user with id"));
+        //Order order = orderService.getOrder(orderItem.getOrder().getId());
+        orderItem.setOrder(order);
+//        User user = userRepository.findById(order.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("Could not find user with id"));
+//
+//        if (!user.getLogin().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
+//            throw new ResourceNotFoundException();
+//        }
 
-        if (!user.getLogin().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
-            throw new ResourceNotFoundException();
-        }
+//        User currentUser = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
+//        orderItem.setUser(currentUser);
+//        order.setUser(currentUser);
 
         order.setQuantity(orderItem.getQuantity() + order.getQuantity());
         order.setTotal(orderItem.getPrice() * orderItem.getQuantity() + order.getTotal());

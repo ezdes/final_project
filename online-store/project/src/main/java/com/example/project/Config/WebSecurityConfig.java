@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 
 @EnableWebSecurity
@@ -33,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtFilter jwtFilter;
 
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
@@ -41,8 +39,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.setPasswordEncoder(passwordEncoder());
         return auth;
     }
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -57,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/search/**").permitAll()
                 .antMatchers("/sign-up/**").permitAll()
                 .antMatchers("/users/**").permitAll()
+                .antMatchers("/orderItems/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/contacts/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/categories/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/categories/**").hasRole("ADMIN")
