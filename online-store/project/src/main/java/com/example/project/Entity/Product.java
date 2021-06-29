@@ -33,9 +33,14 @@ public class Product extends BaseEntity {
     @Column(name = "weight", nullable = false)
     Double weight;
 
-    @OneToOne
-    @JoinColumn(name = "image_id", referencedColumnName = "id")
-    Image image;
+    @JsonProperty
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "product_images",
+            joinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "image_id", referencedColumnName = "id")}
+    )
+    List<Image> images = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
