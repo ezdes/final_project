@@ -1,5 +1,6 @@
 package com.example.project.Service;
 
+import com.example.project.Entity.Image;
 import com.example.project.Entity.Product;
 import com.example.project.Exception.ResourceNotFoundException;
 import com.example.project.Repository.ProductRepository;
@@ -40,12 +41,31 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProductById(Long id, Product product) throws ResourceNotFoundException {
         return productRepository.findById(id)
                 .map(newProduct -> {
-                    newProduct.setName(product.getName());
-                    newProduct.setDescription(product.getName());
-                    newProduct.setPrice(product.getPrice());
-                    newProduct.setWeight(product.getWeight());
-                    newProduct.setCategory(product.getCategory());
-                    newProduct.setImages(product.getImages());
+                    if (product.getName() != null) {
+                        newProduct.setName(product.getName());
+                    }
+
+                    if (product.getDescription() != null) {
+                        newProduct.setDescription(product.getDescription());
+                    }
+
+                    if (product.getPrice() != null) {
+                        newProduct.setPrice(product.getPrice());
+                    }
+
+                    if (product.getWeight() != null) {
+                        newProduct.setWeight(product.getWeight());
+                    }
+
+                    if (product.getCategory() != null) {
+                        newProduct.setCategory(product.getCategory());
+                    }
+
+                    if (product.getImages().size() != 0) {
+                        List<Image> imageList = product.getImages();
+                        newProduct.setImages(imageList);
+                    }
+
                     return productRepository.save(newProduct);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find product with id ", id));
     }

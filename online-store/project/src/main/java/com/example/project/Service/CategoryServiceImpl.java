@@ -39,9 +39,17 @@ public class CategoryServiceImpl implements CategoryService {
     public Category updateCategoryById(Long id, Category category) throws ResourceNotFoundException {
         return categoryRepository.findById(id)
                 .map(newCategory -> {
-                    newCategory.setName(category.getName());
-                    newCategory.setDescription(category.getDescription());
-                    newCategory.setImage(category.getImage());
+                    if (category.getName() != null) {
+                        newCategory.setName(category.getName());
+                    }
+
+                    if (category.getDescription() != null) {
+                        newCategory.setDescription(category.getDescription());
+                    }
+
+                    if (category.getImage() != null) {
+                        newCategory.setImage(category.getImage());
+                    }
                     return categoryRepository.save(newCategory);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find category with id ", id));
     }
