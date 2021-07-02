@@ -1,11 +1,7 @@
 package com.example.project.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.function.Function;
 
 @Entity
 @Table(name = "card")
@@ -24,5 +20,4 @@ public class Card extends BaseEntity {
 
     @Column(name = "balance")
     Double balance;
-
 }
