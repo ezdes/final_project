@@ -3,6 +3,7 @@ package com.example.project.Service;
 import com.example.project.Entity.Image;
 import com.example.project.Entity.Product;
 import com.example.project.Exception.ResourceNotFoundException;
+import com.example.project.Repository.CategoryRepository;
 import com.example.project.Repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<Product> getAllProducts() {

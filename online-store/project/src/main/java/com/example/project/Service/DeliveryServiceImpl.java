@@ -1,13 +1,9 @@
 package com.example.project.Service;
 
 import com.example.project.Entity.Delivery;
-import com.example.project.Entity.Location;
-import com.example.project.Entity.User;
 import com.example.project.Exception.ResourceNotFoundException;
 import com.example.project.Repository.DeliveryRepository;
-import com.example.project.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,10 +13,6 @@ public class DeliveryServiceImpl implements DeliveryService {
 
     @Autowired
     private DeliveryRepository deliveryRepository;
-    @Autowired
-    private LocationService locationService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public List<Delivery> getAllDeliveries() {
@@ -34,11 +26,7 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     @Override
-    public Delivery createDelivery(Delivery delivery) throws ResourceNotFoundException {
-        Location location = locationService.getLocation(delivery.getLocation().getId());
-        delivery.setPrice(location.getRegion().getPrice().doubleValue());
-        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-        delivery.setUser(user);
+    public Delivery createDelivery(Delivery delivery)  {
         return deliveryRepository.save(delivery);
     }
 
@@ -51,9 +39,30 @@ public class DeliveryServiceImpl implements DeliveryService {
     public Delivery updateDeliveryById(Long id, Delivery delivery) throws ResourceNotFoundException {
         return deliveryRepository.findById(id)
                 .map(newDelivery -> {
-                    newDelivery.setUser(delivery.getUser());
-                    newDelivery.setLocation(delivery.getLocation());
-                    newDelivery.setPrice(delivery.getPrice());
+
+                    if (delivery.getUser() != null) {
+                        newDelivery.setUser(delivery.getUser());
+                    }
+
+                    if (delivery.getCity() != null) {
+                        newDelivery.setCity(delivery.getCity());
+                    }
+
+                    if (delivery.getCountry() != null) {
+                        newDelivery.setCountry(delivery.getCountry());
+                    }
+
+                    if (delivery.getRegion() != null) {
+                        newDelivery.setRegion(delivery.getCountry());
+                    }
+
+                    if (delivery.getStreet() != null) {
+                        newDelivery.setStreet(delivery.getStreet());
+                    }
+
+                    if (delivery.getHouseNumber() != null) {
+                        newDelivery.setHouseNumber(delivery.getHouseNumber());
+                    }
                     return deliveryRepository.save(newDelivery);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find delivery with id ", id));
     }

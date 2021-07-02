@@ -4,7 +4,6 @@ import com.example.project.Entity.Role;
 import com.example.project.Exception.ResourceNotFoundException;
 import com.example.project.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

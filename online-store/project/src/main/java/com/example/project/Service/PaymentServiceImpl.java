@@ -1,14 +1,11 @@
 package com.example.project.Service;
 
-import com.example.project.Entity.*;
+import com.example.project.Entity.Card;
+import com.example.project.Entity.Payment;
 import com.example.project.Enum.PaymentStatus;
-import com.example.project.Enum.DeliveryType;
 import com.example.project.Exception.ResourceNotFoundException;
-import com.example.project.Repository.OrderRepository;
 import com.example.project.Repository.PaymentRepository;
-import com.example.project.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,14 +18,6 @@ public class PaymentServiceImpl implements PaymentService {
     private PaymentRepository paymentRepository;
     @Autowired
     private CardService cardService;
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private DeliveryService deliveryService;
-    @Autowired
-    private LocationService locationService;
-    @Autowired
-    private UserRepository userRepository;
 
     @Override
     public List<Payment> getAllPayments() {
@@ -43,49 +32,15 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment createPayment(Payment payment) throws ResourceNotFoundException {
-
-//        User user = userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName());
-//        payment.setUser(user);
-//        Order order = orderRepository.findOrderByUser_Id(user.getId());
-//        payment.setOrder(order);
-        Order order = orderService.getOrder(payment.getOrder().getId());
-        User user = userRepository.findById(order.getUser().getId()).orElseThrow(() -> new ResourceNotFoundException("Could not find user with id"));
-
-        if (!user.getLogin().equals(SecurityContextHolder.getContext().getAuthentication().getName())) {
-            throw new ResourceNotFoundException();
+        Card card = cardService.getCard(payment.getCard().getId());
+        if (card.getBalance() < payment.getTotal()) {
+            payment.setPaymentStatus(PaymentStatus.FAILED);
         }
-        Delivery delivery = deliveryService.getDelivery(payment.getDelivery().getId());
 
-        if (!delivery.getUser().getId().equals(userRepository.findByLogin(SecurityContextHolder.getContext().getAuthentication().getName()).getId())) {
-            throw new ResourceNotFoundException();
-        }
-        
-        Location location = locationService.getLocation(delivery.getLocation().getId());
-        payment.setTotal(order.getTotal() + location.getRegion().getPrice());
-
-
-        if (payment.getDeliveryType().equals(DeliveryType.DELIVERY)) {
-            payment.setCard(null);
+        else {
+            card.setBalance(card.getBalance() - payment.getTotal());
             payment.setPaymentStatus(PaymentStatus.OK);
         }
-        else if (payment.getDeliveryType().equals(DeliveryType.CASH)) {
-            if (payment.getCard() == null) throw new ResourceNotFoundException();
-
-            Card card = cardService.getCard(payment.getCard().getId());
-
-
-            if (card.getBalance() < payment.getTotal()) {
-                payment.setPaymentStatus(PaymentStatus.FAILED);
-            }
-
-            else {
-                card.setBalance(card.getBalance() - payment.getTotal());
-                cardService.updateCardById(card.getId(), card);
-                payment.setPaymentStatus(PaymentStatus.OK);
-            }
-        }
-
-        else throw new ResourceNotFoundException();
 
         return paymentRepository.save(payment);
     }
@@ -100,11 +55,11 @@ public class PaymentServiceImpl implements PaymentService {
     public Payment updatePaymentById(Long id, Payment payment) throws ResourceNotFoundException {
         return paymentRepository.findById(id)
                 .map(newPayment -> {
-                    newPayment.setPaymentStatus(payment.getPaymentStatus());
-                    newPayment.setDeliveryType(payment.getDeliveryType());
-                    newPayment.setCard(payment.getCard());
-                    newPayment.setDelivery(payment.getDelivery());
-                    newPayment.setOrder(payment.getOrder());
+//                    newPayment.setPaymentStatus(payment.getPaymentStatus());
+//                    newPayment.setDeliveryType(payment.getDeliveryType());
+//                    newPayment.setCard(payment.getCard());
+//                    newPayment.setDelivery(payment.getDelivery());
+//                    newPayment.setOrder(payment.getOrder());
                     return paymentRepository.save(newPayment);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find payment with id ", id));
     }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class RoleServiceImpl implements RoleService {
 
@@ -38,7 +39,6 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findById(id)
                 .map(newRole -> {
                     newRole.setName(role.getName());
-
                     return roleRepository.save(newRole);
                 }).orElseThrow(() -> new ResourceNotFoundException("Could not find role with id ", id));
     }

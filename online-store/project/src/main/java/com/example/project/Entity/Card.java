@@ -1,7 +1,11 @@
 package com.example.project.Entity;
+
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "card")
@@ -15,9 +19,13 @@ public class Card extends BaseEntity {
     @Column(name = "number", nullable = false, unique = true)
     Integer number;
 
-    @Column(name = "ccv", nullable = false)
-    Integer ccv;
+    @Column(name = "cvc", nullable = false)
+    Integer cvc;
 
     @Column(name = "balance")
     Double balance;
+
+    @Column(name = "expiration_date")
+    String expirationDate;
+
 }
