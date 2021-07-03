@@ -48,12 +48,8 @@ public class DeliveryServiceImpl implements DeliveryService {
                         newDelivery.setCity(delivery.getCity());
                     }
 
-                    if (delivery.getCountry() != null) {
-                        newDelivery.setCountry(delivery.getCountry());
-                    }
-
                     if (delivery.getRegion() != null) {
-                        newDelivery.setRegion(delivery.getCountry());
+                        newDelivery.setRegion(delivery.getRegion());
                     }
 
                     if (delivery.getStreet() != null) {

@@ -1,7 +1,9 @@
 package com.example.project.Controller;
 
 import com.example.project.Entity.Payment;
+import com.example.project.Exception.NotEnoughMoneyException;
 import com.example.project.Exception.ResourceNotFoundException;
+import com.example.project.Model.PaymentModel;
 import com.example.project.Service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +26,10 @@ public class PaymentController {
         return paymentService.getPayment(id);
     }
 
-    @PutMapping("/{id}")
-    public Payment updatePaymentById(@PathVariable Long id, @RequestBody Payment payment) throws ResourceNotFoundException {
-        return paymentService.updatePaymentById(id, payment);
-    }
+//    @PutMapping("/{id}")
+//    public Payment updatePaymentById(@PathVariable Long id, @RequestBody Payment payment) throws ResourceNotFoundException {
+//        return paymentService.updatePaymentById(id, payment);
+//    }
 
     @DeleteMapping("/{id}")
     public void deletePaymentById(@PathVariable Long id) {
@@ -35,7 +37,7 @@ public class PaymentController {
     }
 
     @PostMapping
-    public Payment createPayment(@RequestBody Payment payment) throws ResourceNotFoundException {
+    public Payment createPayment(@RequestBody PaymentModel payment) throws ResourceNotFoundException, NotEnoughMoneyException {
         return paymentService.createPayment(payment);
     }
 }

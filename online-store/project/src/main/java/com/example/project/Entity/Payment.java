@@ -23,7 +23,7 @@ public class Payment extends BaseEntity {
     Double total;
 
     @ManyToOne
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     User user;
 
     @OneToOne

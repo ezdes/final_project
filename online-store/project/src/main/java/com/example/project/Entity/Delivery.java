@@ -14,9 +14,6 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Delivery extends BaseEntity {
 
-    @Column(name = "country", nullable = false)
-    String country;
-
     @Column(name = "region", nullable = false)
     String region;
 

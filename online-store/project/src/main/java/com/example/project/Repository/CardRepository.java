@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
+    Card findCardByExpirationDateAndCvcAndNumber(String exDate, Integer cvc, Long number);
+    Card findCardByNumber(Long number);
 }

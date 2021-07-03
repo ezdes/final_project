@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Card extends BaseEntity {
 
     @Column(name = "number", nullable = false, unique = true)
-    Integer number;
+    Long number;
 
     @Column(name = "cvc", nullable = false)
     Integer cvc;

@@ -1,6 +1,7 @@
 package com.example.project.Boot;
 
 import com.example.project.Entity.*;
+import com.example.project.Repository.CardRepository;
 import com.example.project.Repository.RoleRepository;
 import com.example.project.Repository.UserRepository;
 import com.example.project.Service.*;
@@ -24,12 +25,35 @@ public class Boot implements CommandLineRunner {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private CardRepository cardRepository;
 
     @Override
     public void run(String... args) throws Exception {
 
         String nameUser = "ROLE_USER";
         String nameAdmin = "ROLE_ADMIN";
+
+
+        Long cardNumber1 = 5105105105105100L;
+        Long cardNumber2 = 4012888888881881L;
+
+        if (cardRepository.findCardByNumber(cardNumber1) == null) {
+            Card card = new Card();
+            card.setBalance(5000.0);
+            card.setCvc(417);
+            card.setExpirationDate("11/22");
+            card.setNumber(5105105105105100L);
+            cardRepository.save(card);
+        }
+        if (cardRepository.findCardByNumber(cardNumber2) == null) {
+            Card card = new Card();
+            card.setBalance(4000.0);
+            card.setCvc(117);
+            card.setExpirationDate("22/23");
+            card.setNumber(4012888888881881L);
+            cardRepository.save(card);
+        }
 
 
         if (roleRepository.findByName(nameAdmin) == null) {
