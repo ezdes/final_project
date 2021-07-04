@@ -11,9 +11,7 @@ import com.example.project.Repository.CardRepository;
 import com.example.project.Repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -42,7 +40,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment createPayment(PaymentModel paymentModel) throws ResourceNotFoundException, NotEnoughMoneyException {
         Payment payment = new Payment();
-        Card card = cardRepository.findCardByExpirationDateAndCvcAndNumber(paymentModel.getCardExpirationDate(),
+        String month = paymentModel.getCardExpirationDate().substring(0, 2);
+        String year = paymentModel.getCardExpirationDate().substring(2, 4);
+        Card card = cardRepository.findCardByExpirationDateAndCvcAndNumber(month + "/" + year,
                 paymentModel.getCardCVC(), paymentModel.getCardNumber());
 
         if (card == null) throw new ResourceNotFoundException("card not found");
