@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductService {
     List<Product> getAllProducts();
     Product getProduct(Long id) throws ResourceNotFoundException;
-    Product createProduct(Product product);
+    Product createProduct(Product product) throws ResourceNotFoundException;
     void deleteProductById(Long id);
     Product updateProductById(Long id, Product product) throws ResourceNotFoundException;
 }

@@ -30,7 +30,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public Product createProduct(Product product) throws ResourceNotFoundException {
+        if (product.getName() == null || product.getDescription() == null
+        || product.getPrice() == null) throw new ResourceNotFoundException();
         return productRepository.save(product);
     }
 

@@ -43,7 +43,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
+    public Product createProduct(@RequestBody Product product) throws ResourceNotFoundException {
         return productService.createProduct(product);
     }
 }

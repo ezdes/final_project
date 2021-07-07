@@ -26,7 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category createCategory(Category category) {
+    public Category createCategory(Category category) throws ResourceNotFoundException {
+        if (category.getName() == null || category.getDescription() == null)
+            throw new ResourceNotFoundException();
         return categoryRepository.save(category);
     }
 

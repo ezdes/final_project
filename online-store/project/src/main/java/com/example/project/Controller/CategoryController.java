@@ -35,7 +35,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
+    public Category createCategory(@RequestBody Category category) throws ResourceNotFoundException {
         return categoryService.createCategory(category);
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface CategoryService {
     List<Category> getAllCategories();
     Category getCategory(Long id) throws ResourceNotFoundException;
-    Category createCategory(Category category);
+    Category createCategory(Category category) throws ResourceNotFoundException;
     void deleteCategoryById(Long id);
     Category updateCategoryById(Long id, Category category) throws ResourceNotFoundException;
 }
